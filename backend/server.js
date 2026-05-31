@@ -2,10 +2,11 @@ import {app} from "./src/app.js";
 import {connectdb} from "./src/config/db.js";
 
 import dns from "node:dns/promises"
+import {env} from "./src/config/env.js";
 dns.setServers(["1.1.1.1"])
 
 
-const port = process.env.PORT || 3000
+const port = env.PORT || 3000
 const startServer = async () => {
     await connectdb()
     app.listen(port, () => {
