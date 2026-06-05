@@ -3,10 +3,10 @@ import {createAuthService} from '../services/authService.js';
 import {http_status} from "../../../shared/constants.js";
 
 
-const authService = createAuthService()
+const authServices = createAuthService()
 
 export const register = asyncHandler(async (req, res) => {
-    const {user} = await authService.register(req.body)
+    const {user} = await authServices.register(req.body)
     res.status(http_status.created).json({
         user
     }, 'user registered successfully')
