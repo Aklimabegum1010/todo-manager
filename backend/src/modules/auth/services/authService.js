@@ -16,7 +16,6 @@ const accessToken = generateAccessToken(userId)
 }
 
 
-
     return {
         register: async ({name, email, password}) => {
             const user = await userRepository.create({name, email, password})

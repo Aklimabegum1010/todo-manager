@@ -6,8 +6,8 @@ import {http_status} from "../../../shared/constants.js";
 const authServices = createAuthService()
 
 export const register = asyncHandler(async (req, res) => {
-    const {user} = await authServices.register(req.body)
+    const {user, accessToken} = await authServices.register(req.body)
     res.status(http_status.created).json({
-        user
+        user, accessToken
     }, 'user registered successfully')
 })
