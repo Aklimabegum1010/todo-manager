@@ -1,5 +1,5 @@
 import {createAuthRepository} from '../repositories/authRepository.js';
-import {generateAccessToken} from "../../../utils/jwt.js";
+import {generateAccessToken, generateRefreshToken} from "../../../utils/jwt.js";
 
 
 
@@ -10,8 +10,10 @@ export const createAuthService = (userRepository = createAuthRepository()) => {
 
 const generateTokenPair = async (userId) => {
 const accessToken = generateAccessToken(userId)
+    const refreshToken = generateRefreshToken()
     return{
-    accessToken
+    accessToken,
+        refreshToken
     }
 }
 

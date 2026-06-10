@@ -10,3 +10,11 @@ export const generateAccessToken = (userId) => {
 export const verifyAccessToken = token => {
     return jwt.verify(token, env.JWT_ACCESS_SECRET)
 }
+
+
+export const generateRefreshToken = (userId) => {
+    return jwt.sign({id: userId}, env.JWT_ACCESS_SECRET)
+}
+export const verifyRefreshToken = token => {
+    return jwt.verify(token, env.JWT_ACCESS_SECRET)
+}
