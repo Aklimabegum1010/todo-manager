@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import {validation} from '../../../shared/constants.js';
-
+import bcrypt from 'bcryptjs'
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -26,4 +26,20 @@ const userSchema = new mongoose.Schema({
     timestamps: true,
     versionKey: false
 })
+userSchema.pre('save',async function (){
+    if (!this.isModified('password'))return
+    console.log(validation.bcrypt_salt_rounds)
+    try {
+        this.password = await bcrypt.hash(this.password,
+            validation.bcrypt_salt_rounds)
+    }catch (error){
+        console.error(error)
+
+    }
+
+})
+
+
+
+
 export const User = mongoose.models.User || mongoose.model('User', userSchema)
