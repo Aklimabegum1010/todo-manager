@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 import {validation} from '../../../shared/constants.js';
 import bcrypt from 'bcryptjs'
+
+
+
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -20,12 +24,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'password is required'],
         minLength: [validation.passwordMinLength, `password must be at least ${validation.passwordMinLength} characters`],
-        select: false
+        select: false 
     }
 }, {
     timestamps: true,
     versionKey: false
 })
+
+
+
 userSchema.pre('save',async function (){
     if (!this.isModified('password'))return
     console.log(validation.bcrypt_salt_rounds)
@@ -38,8 +45,5 @@ userSchema.pre('save',async function (){
     }
 
 })
-
-
-
 
 export const User = mongoose.models.User || mongoose.model('User', userSchema)

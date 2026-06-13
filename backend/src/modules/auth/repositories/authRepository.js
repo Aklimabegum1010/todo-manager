@@ -1,4 +1,6 @@
-import {User} from '../models/userModel.js';
+
+
+import {User} from "../models/userModel.js";
 
 export const createAuthRepository = () => {
     return {
@@ -6,7 +8,7 @@ export const createAuthRepository = () => {
             const user = await User.create(userData)
             const {password, ...userWithoutPassword} = user.toObject()
             return userWithoutPassword
-        },
+        }, 
         findById: id => {
             return User.findById(id)
         }

@@ -2,8 +2,6 @@ import {z} from 'zod';
 import {validation} from '../../../shared/constants.js';
 
 
-
-
 export const registerSchema = z.object({
     body: z.object({
         name: z.string()

@@ -2,11 +2,7 @@ import {createAuthRepository} from '../repositories/authRepository.js';
 import {generateAccessToken, generateRefreshToken} from "../../../utils/jwt.js";
 
 
-
-
-
 export const createAuthService = (userRepository = createAuthRepository()) => {
-
 
 const generateTokenPair = async (userId) => {
 const accessToken = generateAccessToken(userId)
@@ -16,7 +12,6 @@ const accessToken = generateAccessToken(userId)
         refreshToken
     }
 }
-
 
     return {
         register: async ({name, email, password}) => {
