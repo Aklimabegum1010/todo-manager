@@ -9,8 +9,11 @@ export const createAuthRepository = () => {
             const {password, ...userWithoutPassword} = user.toObject()
             return userWithoutPassword
         }, 
-        findById: id => {
+        findById: async id => {
             return User.findById(id)
+        },
+        findByEmail: async  email => {
+            return User.findOne({email}).select('password').lean()
         }
     }
 }
