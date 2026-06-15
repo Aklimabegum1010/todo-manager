@@ -26,7 +26,7 @@ const todoSchema = new mongoose.Schema({
         type: String,
         enum: {
             values:valid_todo_status,
-            message: `status must be one of ${valid_todo_status.join(', ')}`
+            message: `status must be one of ${valid_todo_status.join(', ')}`,
             default: todo_status.active
         },
         user: {
@@ -36,7 +36,7 @@ const todoSchema = new mongoose.Schema({
         }
     },
     timestamps: true,
-    versoinKey: false,
+    versionKey: false,
     toJSON: {
         transform(doc, ret) {
             ret.id = ret._id.toString()
