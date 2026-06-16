@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import {validation} from "../../../shared/constants.js";
 import {todo_status, valid_todo_status} from "../../../shared/enums.js";
 
-const todoSchema = new mongoose.Schema({
+export const todoSchema = new mongoose.Schema({
     title:{
         type: String,
         required: [true, 'title is required'],
@@ -25,22 +25,25 @@ const todoSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: {
-            values:valid_todo_status,
+            values: valid_todo_status,
             message: `status must be one of ${valid_todo_status.join(', ')}`,
-            default: todo_status.active
+
         },
+        default: todo_status.active
+    },
         user: {
             type:mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'User'
         }
     },
-    timestamps: true,
-    versionKey: false,
-    toJSON: {
-        transform(doc, ret) {
-            ret.id = ret._id.toString()
-            delete ret._id
+    {
+        timestamps: true,
+        versionKey: false,
+        toJSON: {
+            transform(doc, ret) {
+                ret.id = ret._id.toString()
+                delete ret._id
         }
     }
 

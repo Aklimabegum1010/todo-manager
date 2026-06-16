@@ -1,6 +1,6 @@
 import {createTodoRepository} from "../repositories/todoRepository.js";
 
-export const todoService = (todoRepository = createTodoRepository()) => {
+export const createTodoService = (todoRepository = createTodoRepository()) => {
     return{
         create: async (todoData) => {
             try {
