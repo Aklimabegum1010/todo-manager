@@ -26,7 +26,6 @@ export class UserRepository {
         this.model = model
     }
 
-
     async findByEmail(email){
         return this.model.findOne({email}).select('+password')
     }
@@ -34,4 +33,5 @@ export class UserRepository {
         return this.model.create(userData)
     }
 }
+
 
