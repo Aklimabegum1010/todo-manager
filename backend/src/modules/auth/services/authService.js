@@ -43,6 +43,7 @@
 import {UserRepository} from "../repositories/authRepository.js";
 import {ApiError} from "../../../utils/apiError.js";
 import {http_status} from "../../../shared/constants.js";
+import {generateAccessToken, generateRefreshToken} from "../../../utils/jwt.js";
 
 export class AuthService {
     #userRepository
@@ -50,14 +51,28 @@ export class AuthService {
         this.#userRepository = userRepo
     }
 
+async #generateTokenPair(userId) {
+if (!userId){
+    throw new Error('userId is required for token generation')
+}
+const accessToken = generateAccessToken(userId)
+const refreshToken = generateRefreshToken(userId)
+    return{
+        accessToken, refreshToken
+    }
+}
+
+
 async register({name, email, password}) {
 const existingUser = await this.#userRepository.findByEmail(email)
     if (existingUser){
 throw new ApiError(http_status.conflict, 'user email already exists')
     }
     const user = await this.#userRepository.create({name, email, password})
+    const tokens = await this.#generateTokenPair(user._id)
     return {
-        user
+        user,
+        ...tokens
     }
 }
 
