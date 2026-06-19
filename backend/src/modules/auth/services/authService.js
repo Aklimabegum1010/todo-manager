@@ -44,6 +44,7 @@ import {UserRepository} from "../repositories/authRepository.js";
 import {ApiError} from "../../../utils/apiError.js";
 import {http_status} from "../../../shared/constants.js";
 import {generateAccessToken, generateRefreshToken} from "../../../utils/jwt.js";
+import bcrypt from "bcryptjs";
 
 export class AuthService {
     #userRepository
@@ -72,6 +73,22 @@ throw new ApiError(http_status.conflict, 'user email already exists')
     const tokens = await this.#generateTokenPair(user._id)
     return {
         user,
+        ...tokens
+    }
+}
+async login({email, password}) {
+const user = await this.#userRepository.findByEmail(email)
+    if (!user) {
+        throw new ApiError(http_status.unauthorized, 'invalid email or password')
+    }
+    const isMatch = await bcrypt.compare(password, user.password)
+    if (!isMatch) {
+        throw new ApiError(http_status.unauthorized, 'invalid email or password')
+    }
+    const {password: _, ...userWithoutPassword} = user
+    const tokens = await this.#generateTokenPair(user._id)
+    return{
+        user:userWithoutPassword,
         ...tokens
     }
 }

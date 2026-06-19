@@ -10,5 +10,6 @@ export const validation = Object.freeze({
 export const http_status = {
     created: 201,
     ok: 200,
-    conflict: 409
+    conflict: 409,
+    unauthorized: 401
 }
