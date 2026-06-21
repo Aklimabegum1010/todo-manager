@@ -1,4 +1,5 @@
 import {ZodError} from 'zod';
+import {ApiError} from '../utils/apiError.js';
 
 export const validate = schema => (req, _res, next) => {
     try {
@@ -9,11 +10,13 @@ export const validate = schema => (req, _res, next) => {
         next()
     } catch (error) {
         if (error instanceof ZodError) {
-            error.errors.map(err => ({
+            const formattedErrors = error.errors.map(err => ({
                 field: err.path.length ? err.path.join('.') : 'unknown',
                 message: err.message
             }))
+            return next(new ApiError(400, 'Validation failed', formattedErrors))
         }
+        next(error)
     }
 }
 

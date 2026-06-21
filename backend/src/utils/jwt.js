@@ -11,7 +11,7 @@ export const verifyAccessToken = token => {
 
 
 export const generateRefreshToken = (userId) => {
-    return jwt.sign({id: userId}, env.JWT_ACCESS_SECRET)
+    return jwt.sign({id: userId}, env.JWT_REFRESH_SECRET)
 }
 export const verifyRefreshToken = token => {
     return jwt.verify(token, env.JWT_ACCESS_SECRET)
