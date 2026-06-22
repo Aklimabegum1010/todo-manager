@@ -47,7 +47,13 @@ import {generateAccessToken, generateRefreshToken} from "../../../utils/jwt.js";
 import bcrypt from "bcryptjs";
 
 export class AuthService {
+
+
+// # মানে Private field — এটা শুধু এই class এর ভেতরে access করা যাবে, বাইরে থেকে কেউ ধরতে পারবে না।
     #userRepository
+
+    // flow Controller → Service → Repository → Database
+
     constructor(userRepo = new UserRepository()) {
         this.#userRepository = userRepo
     }
