@@ -12,5 +12,6 @@ export const http_status = {
     ok: 200,
     conflict: 409,
     unauthorized: 401,
-    internal_server_error:500
+    internal_server_error:500,
+    bed_request: 400
 }
