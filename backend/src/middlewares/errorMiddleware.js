@@ -10,7 +10,15 @@ let statusCode = err.statusCode || http_status.internal_server_error
         statusCode = http_status.bed_request
         message = `invalid ${err.path} : ${err.value}`
     }
+    if (err.code === 11000){
+        statusCode = http_status.conflict
+        const field = Object.keys(err.keyValue).join(', ')
+        message = `duplicate value for ${field}`
+    }
 }
+
+
+
 
 
 
