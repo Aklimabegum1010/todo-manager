@@ -2,9 +2,6 @@ import mongoose from 'mongoose';
 import {validation} from '../../../shared/constants.js';
 import bcrypt from 'bcryptjs'
 
-
-
-
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
