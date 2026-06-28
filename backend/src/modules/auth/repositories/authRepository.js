@@ -32,6 +32,9 @@ export class UserRepository {
     async create(userData){
         return this.model.create(userData)
     }
+    async findById(id, selectFields = '') {
+         return this.model.findById(id).select(selectFields)
+    }
 }
 
 

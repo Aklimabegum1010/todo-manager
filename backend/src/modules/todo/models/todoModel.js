@@ -3,6 +3,13 @@ import {validation} from "../../../shared/constants.js";
 import {todo_status, valid_todo_status} from "../../../shared/enums.js";
 
 export const todoSchema = new mongoose.Schema({
+
+user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+},
+
     title:{
         type: String,
         required: [true, 'title is required'],
@@ -43,6 +50,7 @@ export const todoSchema = new mongoose.Schema({
     }
 
 })
+export const title_collation ={locale: 'en', strength: 2}
 todoSchema.index({user:1, status: 1, createdAt: -1})
 todoSchema.index({user:1, title: 'text', description: 'text'})
 export const Todo = mongoose.models.Todo || mongoose.model('Todo', todoSchema)
