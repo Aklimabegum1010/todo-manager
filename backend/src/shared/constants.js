@@ -3,7 +3,8 @@ export const validation = Object.freeze({
     passwordMinLength: 6,
     bcrypt_salt_rounds: 12,
     title_max_Length: 100,
-    description_max_Length: 300
+    description_max_Length: 300,
+    bulk_create_max: 50
 
 })
 

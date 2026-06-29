@@ -18,7 +18,7 @@
 
 
 
-import {Todo} from "../models/todoModel.js";
+import {title_collation, Todo} from "../models/todoModel.js";
 
 export class TodoRepository {
     constructor(model = Todo) {
@@ -33,6 +33,12 @@ try {
     }
 
 }
+    }
+
+
+    async insertMany(todos) {
+        return this.model.insertMany(todos, {ordered: false, collation:
+            title_collation})
     }
 }
 
