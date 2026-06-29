@@ -1,7 +1,7 @@
 import {asyncHandler} from "../utils/asyncHandler.js";
 import {ApiError} from "../utils/apiError.js";
 import {http_status} from "../shared/constants.js";
-import {verify} from "jsonwebtoken";
+// import {verify} from "jsonwebtoken";
 import {verifyAccessToken} from "../utils/jwt.js";
 import {UserRepository} from "../modules/auth/repositories/authRepository.js";
 

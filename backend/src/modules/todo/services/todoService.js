@@ -22,9 +22,9 @@ export class TodoService {
     constructor(repository = new TodoRepository()) {
         this.todoRepository = repository
     }
-    async create(todoData) {
+    async create(todoData, userId) {
         try {
-            return await this.todoRepository.create({...todoData})
+            return await this.todoRepository.create({...todoData, user: userId})
         } catch (error) {
            if (error.message === 'duplicate title') {
                throw new ApiError(http_status.conflict, 'title already exists')

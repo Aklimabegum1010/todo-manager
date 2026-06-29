@@ -8,7 +8,7 @@ import {TodoService} from "../services/todoService.js";
 const todoService = new TodoService()
 
 export const createTodo = asyncHandler(async (req, res) => {
-    const todo = await todoService.create(req.body)
+    const todo = await todoService.create(req.body, req.user?._id)
     new ApiResponse(http_status.created, todo, 'todo created successfully')
         .send(res)
 })
