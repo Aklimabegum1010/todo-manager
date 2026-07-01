@@ -1,18 +1,3 @@
-// import {createTodoRepository} from "../repositories/todoRepository.js";
-//
-// export const createTodoService = (todoRepository = createTodoRepository()) => {
-//     return{
-//         create: async (todoData) => {
-//             try {
-//               return await todoRepository.create(todoData)
-//             } catch (err) {
-//                 console.error(err.message)
-//
-//             }
-//         }
-//     }
-// }
-
 
 import {TodoRepository} from "../repositories/todoRepository.js";
 import {ApiError} from "../../../utils/apiError.js";
@@ -39,7 +24,7 @@ async bulkCreate(todosArray, userId) {
         }))
     try {
 const created = await this.todoRepository.insertMany(todoWithUser)
-        return{count: created.length, todos: created}
+        return {count: created.length, todos: created}
     }catch (error) {
         if (error.code === 11000 || error.name === 'MongoBulkWriteError') {
             const inserted = error.insertedDocs ?? []

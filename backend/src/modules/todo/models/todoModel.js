@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import {validation} from "../../../shared/constants.js";
-import {todo_status, valid_todo_status} from "../../../shared/enums.js";
+import {priority_status, todo_status, valid_priority_status, valid_todo_status} from "../../../shared/enums.js";
 
 export const todoSchema = new mongoose.Schema({
 
@@ -37,7 +37,21 @@ user: {
 
         },
         default: todo_status.active
-    }
+    },
+
+priority: {
+    type:String,
+    enum: {
+        values: valid_priority_status,
+        message: `${priority_status.join(', ')} is not a valid`,
+
+    },
+    default: priority_status.low,
+    index: true
+}
+
+
+
     },
     {
         timestamps: true,

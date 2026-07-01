@@ -1,5 +1,4 @@
 import {asyncHandler} from "../../../utils/asyncHandler.js";
-
 import {ApiResponse} from "../../../utils/apiResponse.js";
 import {http_status} from "../../../shared/constants.js";
 import {TodoService} from "../services/todoService.js";
@@ -17,7 +16,6 @@ export const createTodo = asyncHandler(async (req, res) => {
 export const bulkCreateTodos =asyncHandler(async (req, res ) => {
 const todos = req.body?.todos || []
     const bulkTodo = await todoService.bulkCreate(todos, req.user?._id)
-    new ApiResponse(http_status.created, bulkTodo, `${bulkTodo?.count || 0}
-    todos created successfully`)
+    new ApiResponse(http_status.created, bulkTodo, `${bulkTodo?.count || 0} todos created successfully`)
         .send(res)
 })
