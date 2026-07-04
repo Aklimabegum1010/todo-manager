@@ -15,8 +15,6 @@ try {
 
 }
     }
-
-
     async insertMany(todos) {
         return this.model.insertMany(todos, {ordered: false, collation:
             title_collation})

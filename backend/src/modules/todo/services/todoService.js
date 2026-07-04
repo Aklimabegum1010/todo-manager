@@ -1,4 +1,3 @@
-
 import {TodoRepository} from "../repositories/todoRepository.js";
 import {ApiError} from "../../../utils/apiError.js";
 import {http_status} from "../../../shared/constants.js";
@@ -32,8 +31,7 @@ const created = await this.todoRepository.insertMany(todoWithUser)
             return {
                 count: inserted.length,
                 todos: inserted,
-                warnings: failedCount > 0 ? `${failedCount} 
-                todos were skipped`: undefined
+                warnings: failedCount > 0 ? `${failedCount} todos were skipped`: undefined
             }
         }
         throw error

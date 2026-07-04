@@ -15,8 +15,7 @@ user: {
         required: [true, 'title is required'],
         trim: true,
         minLength: [1, 'title cannot be empty'],
-        maxLength: [validation.title_max_Length, `title cannot be exceed
-         ${validation.title_max_Length} characters` ],
+        maxLength: [validation.title_max_Length, `title cannot be exceed ${validation.title_max_Length} characters` ],
         validate: {
             validator: v => v != null && v.trim().length > 0,
             message: 'title cannot be blank'
@@ -26,8 +25,7 @@ user: {
     description:{
         type: String,
         required: [true, 'description is required'],
-        maxLength: [validation.description_max_Length, `description cannot be exceed
-         ${validation.description_max_Length} characters` ],
+        maxLength: [validation.description_max_Length, `description cannot be exceed ${validation.description_max_Length} characters` ],
     },
     status: {
         type: String,
@@ -43,14 +41,17 @@ priority: {
     type:String,
     enum: {
         values: valid_priority_status,
-        message: `${priority_status.join(', ')} is not a valid`,
+        message: `${valid_priority_status.join(', ')} is not a valid`,
 
     },
     default: priority_status.low,
     index: true
+
+    // index: true দিলে MongoDB সেই ফিল্ডের জন্য একটা আলাদা
+    // data structure (B-Tree) বানিয়ে রাখে, ঠিক যেমন বইয়ের
+    // শেষে থাকা Index পেজ দেখে তুমি সরাসরি টপিক খুঁজে পাও,
+    // পুরো বই না উল্টিয়ে।
 }
-
-
 
     },
     {
@@ -65,7 +66,6 @@ priority: {
 
 })
 export const title_collation ={locale: 'en', strength: 2}
-
 
 todoSchema.index({user: 1, title: 1}, {unique:true, collation: title_collation})
 todoSchema.index({user:1, status: 1, createdAt: -1})

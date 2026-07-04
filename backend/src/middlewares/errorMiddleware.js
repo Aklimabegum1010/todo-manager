@@ -26,14 +26,16 @@ let statusCode = err.statusCode || http_status.internal_server_error
     // Response: invalid _id : abc123xyz
 
     if (err.name === 'CastError') {
-        statusCode = http_status.bed_request
+        statusCode = http_status.bad_request
         message = `invalid ${err.path} : ${err.value}`
     }
 
 
     // MongoDB-তে unique field-এ একই value দুইবার insert করলে code: 11000 error আসে।
     // যেমন: একই email দিয়ে দুইবার register করলে
-    // Object.keys(err.keyValue) → ["email"] array বের করে
+    // Object.keys(err.keyValue) — শুধু ফিল্ডের নামগুলো বের করা হচ্ছে (["email"]),
+    // ভ্যালু বাদ দিয়ে (সিকিউরিটি/প্রাইভেসির জন্য ভালো —
+    // ইউজারের ইমেইল/ডেটা মেসেজে echo করা হচ্ছে না)।
     if (err.code === 11000){
         statusCode = http_status.conflict
         const field = Object.keys(err.keyValue).join(', ')
@@ -45,7 +47,7 @@ let statusCode = err.statusCode || http_status.internal_server_error
     // যেমন: required field missing, wrong type ইত্যাদি
 
     if (err.name === 'ValidationError'){
-        statusCode = http_status.bed_request
+        statusCode = http_status.bad_request
         errors = Object.values(err.errors).map(e => ({field: e.path, message: e.message}))
         message = 'Validation failed'
     }
@@ -93,22 +95,4 @@ res.status(statusCode).json({
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
