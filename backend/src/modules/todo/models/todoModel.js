@@ -4,11 +4,11 @@ import {priority_status, todo_status, valid_priority_status, valid_todo_status} 
 
 export const todoSchema = new mongoose.Schema({
 
-user: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'User'
-},
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
 
     title:{
         type: String,
@@ -46,12 +46,12 @@ priority: {
     },
     default: priority_status.low,
     index: true
-
-    // index: true দিলে MongoDB সেই ফিল্ডের জন্য একটা আলাদা
-    // data structure (B-Tree) বানিয়ে রাখে, ঠিক যেমন বইয়ের
-    // শেষে থাকা Index পেজ দেখে তুমি সরাসরি টপিক খুঁজে পাও,
-    // পুরো বই না উল্টিয়ে।
-}
+},
+    dueDate: {
+        type:Date,
+        default: null,
+        index: true
+    }
 
     },
     {
@@ -66,6 +66,11 @@ priority: {
 
 })
 export const title_collation ={locale: 'en', strength: 2}
+
+
+todoSchema.index({user:1, priority: 1})
+todoSchema.index({user:1, dueDate: 1})
+
 
 todoSchema.index({user: 1, title: 1}, {unique:true, collation: title_collation})
 todoSchema.index({user:1, status: 1, createdAt: -1})
