@@ -6,6 +6,18 @@ export class TodoService {
     constructor(repository = new TodoRepository()) {
         this.todoRepository = repository
     }
+
+    static #buildFilterQuery ({status, priority, search, overdue}, userId) {
+        const query = {user: userId}
+        if (overdue) {
+            query.status = todo_status.active
+        }
+    }
+
+
+
+
+
     async create(todoData, userId) {
         try {
             return await this.todoRepository.create({...todoData, user: userId})
@@ -37,6 +49,8 @@ const created = await this.todoRepository.insertMany(todoWithUser)
         throw error
     }
 }
+    async getAll(filters, userId){
 
+    }
 }
 

@@ -19,3 +19,8 @@ const todos = req.body?.todos || []
     new ApiResponse(http_status.created, bulkTodo, `${bulkTodo?.count || 0} todos created successfully`)
         .send(res)
 })
+
+
+export const getTodos = asyncHandler(async (req, res) => {
+    const todo = await todoService.getAll()
+})

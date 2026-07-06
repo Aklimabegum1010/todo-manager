@@ -9,4 +9,4 @@ todoRoute.use(protect)
 
 todoRoute.post('/create', validate(createTodoSchema), createTodo)
 todoRoute.post('/bulk', validate(bulkCreateTodosSchema), bulkCreateTodos)
-todoRoute.get('/getTodos', validate(getTodosQuerySchema), bulkCreateTodos)
+todoRoute.get('/getTodos', validate(getTodosQuerySchema), )
