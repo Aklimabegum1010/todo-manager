@@ -16,3 +16,8 @@ export const http_status = {
     internal_server_error:500,
     bad_request: 400
 }
+
+export const pagination = Object.freeze({
+    default_page: 1,
+    max_limit : 1000
+})

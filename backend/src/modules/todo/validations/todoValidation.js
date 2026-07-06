@@ -39,3 +39,27 @@ export const bulkCreateTodosSchema = z.object({
     })
 })
 
+export const getTodosQuerySchema = z.object({
+    query: z.object({
+        page: z.string()
+            .optional()
+            .transform(val => val !== undefined ? parseInt(val, 10) : 1)
+            .pipe(z.number().int().min(pagination.default_page, 'page must be at least  1')),
+
+        limit: z.string()
+            .optional()
+            .transform(val => val !== undefined ? parseInt(val, 10) : 1)
+            .pipe(z.number().int().min(pagination.default_page).max(pagination.max_limit, `limit cannot exceed ${pagination.max_limit}`)),
+
+        status: z.enum(valid_todo_status).optional(),
+        priority: z.enum(priority_status).optional(),
+        search: z.string()
+            .trim()
+            .max(100, 'search query cannot exceed 100 characters')
+            .optional(),
+        overdue: z.enum(['true', 'false'])
+            .optional()
+            .transform(val => val === 'true')
+    })
+})
+

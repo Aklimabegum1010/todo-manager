@@ -37,21 +37,23 @@ export const todoSchema = new mongoose.Schema({
         default: todo_status.active
     },
 
-priority: {
-    type:String,
-    enum: {
-        values: valid_priority_status,
-        message: `${valid_priority_status.join(', ')} is not a valid`,
+// priority: {
+//     type:String,
+//     enum: {
+//         values: valid_priority_status,
+//         message: `${valid_priority_status.join(', ')} is not a valid`,
+//
+//     },
+//     default: priority_status.low,
+//     index: true
+// },
 
-    },
-    default: priority_status.low,
-    index: true
-},
-    dueDate: {
-        type:Date,
-        default: null,
-        index: true
-    }
+
+    // dueDate: {
+    //     type:Date,
+    //     default: null,
+    //     index: true
+    // }
 
     },
     {
@@ -68,8 +70,8 @@ priority: {
 export const title_collation ={locale: 'en', strength: 2}
 
 
-todoSchema.index({user:1, priority: 1})
-todoSchema.index({user:1, dueDate: 1})
+// todoSchema.index({user:1, priority: 1})
+// todoSchema.index({user:1, dueDate: 1})
 
 
 todoSchema.index({user: 1, title: 1}, {unique:true, collation: title_collation})
