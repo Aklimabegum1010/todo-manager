@@ -1,17 +1,27 @@
 import {TodoRepository} from "../repositories/todoRepository.js";
 import {ApiError} from "../../../utils/apiError.js";
-import {http_status} from "../../../shared/constants.js";
+import {http_status, pagination} from "../../../shared/constants.js";
+import {todo_status} from "../../../shared/enums.js";
 
 export class TodoService {
     constructor(repository = new TodoRepository()) {
         this.todoRepository = repository
     }
 
-    static #buildFilterQuery ({status, priority, search, overdue}, userId) {
+
+    //get er kaj
+    static #buildFilterQuery ({status, priority, overdue}, userId) {
         const query = {user: userId}
         if (overdue) {
             query.status = todo_status.active
+            query.dueDate = {$lt: new Date(new Date().setHours(0, 0, 0, 0))}
         }
+
+        else {
+            if (status) query.status = status
+        }
+        if (priority) query.priority = priority
+        return query
     }
 
 
@@ -49,8 +59,24 @@ const created = await this.todoRepository.insertMany(todoWithUser)
         throw error
     }
 }
-    async getAll(filters, userId){
 
+
+
+             //get er kaj
+    async getAll(filters, userId){
+      const {page = pagination.default_page, limit = pagination
+    .default_limit, search, ...filterQuery} = filters
+        const filtersQuery = TodoService.#buildFilterQuery(filterQuery, userId)
+        const {todos, total} = await this.todoRepository.findWithPagination(filtersQuery, {
+            page, limit
+        })
+        return{
+          todos,
+            pagination: {
+              total,
+                currentPage: page
+            }
+        }
     }
 }
 

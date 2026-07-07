@@ -37,23 +37,23 @@ export const todoSchema = new mongoose.Schema({
         default: todo_status.active
     },
 
-// priority: {
-//     type:String,
-//     enum: {
-//         values: valid_priority_status,
-//         message: `${valid_priority_status.join(', ')} is not a valid`,
-//
-//     },
-//     default: priority_status.low,
-//     index: true
-// },
+priority: {
+    type:String,
+    enum: {
+        values: valid_priority_status,
+        message: `${valid_priority_status.join(', ')} is not a valid`,
+
+    },
+    default: priority_status.low,
+    index: true
+},
 
 
-    // dueDate: {
-    //     type:Date,
-    //     default: null,
-    //     index: true
-    // }
+    dueDate: {
+        type:Date,
+        default: null,
+        index: true
+    }
 
     },
     {
