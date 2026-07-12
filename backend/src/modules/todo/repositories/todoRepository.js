@@ -45,6 +45,32 @@ if (search){
     if (matchQuery.user){
         matchQuery.user = toObjectId(matchQuery.user, 'User ID')
     }
+const searchStage = {
+        $search: {
+            index: 'todo_autocomplete',
+            compound: {
+                should: [
+                    {
+                      autocomplete: {
+                          query: search,
+                          path: 'title',
+                          fuzzy: {maxEdits: 1}
+                      }
+                    },
+                    {
+                      autocomplete: {
+                          query: search,
+                          path: 'title',
+                          fuzzy: {maxEdits: 1}
+                      }
+                    }
+                ],
+                minimumShouldMatch: 1
+            }
+        }
+}
+
+
 }
         const [todos, total] = await Promise.all([this.model.find(query).sort
         (sort).skip(skip).limit(limit).lean(),this.model.countDocuments(query)])

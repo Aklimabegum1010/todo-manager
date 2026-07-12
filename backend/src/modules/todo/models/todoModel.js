@@ -48,7 +48,6 @@ priority: {
     index: true
 },
 
-
     dueDate: {
         type:Date,
         default: null,
