@@ -69,7 +69,13 @@ const searchStage = {
             }
         }
 }
-
+const pipeline = [
+    searchStage,
+    {$match: matchQuery},
+    ...(sort ? [{$sort: sort}] : []),
+    {$skip: skip},
+    {$limit: limit}
+]
 
 }
         const [todos, total] = await Promise.all([this.model.find(query).sort
