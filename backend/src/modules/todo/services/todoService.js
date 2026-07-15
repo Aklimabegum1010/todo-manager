@@ -8,26 +8,6 @@ export class TodoService {
         this.todoRepository = repository
     }
 
-
-    //get er kaj
-    static #buildFilterQuery ({status, priority, overdue}, userId) {
-        const query = {user: userId}
-        if (overdue) {
-            query.status = todo_status.active
-            query.dueDate = {$lt: new Date(new Date().setHours(0, 0, 0, 0))}
-        }
-
-        else {
-            if (status) query.status = status
-        }
-        if (priority) query.priority = priority
-        return query
-    }
-
-
-
-
-
     async create(todoData, userId) {
         try {
             return await this.todoRepository.create({...todoData, user: userId})
@@ -63,6 +43,23 @@ const created = await this.todoRepository.insertMany(todoWithUser)
 
 
              //get er kaj
+
+
+    static #buildFilterQuery ({status, priority, overdue}, userId) {
+        const query = {user: userId}
+        if (overdue) {
+            query.status = todo_status.active
+            query.dueDate = {$lt: new Date(new Date().setHours(0, 0, 0, 0))}
+        }
+
+        else {
+            if (status) query.status = status
+        }
+        if (priority) query.priority = priority
+        return query
+    }
+
+
     async getAll(filters, userId){
       const {page = pagination.default_page, limit = pagination
     .default_limit, search, ...filterQuery} = filters

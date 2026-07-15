@@ -22,5 +22,6 @@ const todos = req.body?.todos || []
 
 
 export const getTodos = asyncHandler(async (req, res) => {
-    const todo = await todoService.getAll()
+    const todo = await todoService.getAll(req.query || {} , req.user?.id)
+    new ApiResponse(http_status.ok, todo, 'todo retrieved successfully').send(res)
 })

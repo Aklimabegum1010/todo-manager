@@ -1,20 +1,35 @@
 import {ZodError} from 'zod';
 import {ApiError} from '../utils/apiError.js';
+import {http_status} from "../shared/constants.js";
 
-export const validate = schema => (req, _res, next) => {
+export const validate = schema => async (req, _res, next) => {
     try {
-        const parsed = schema.parse({
-            body: req.body
+        const parsed = await schema.parseAsync({
+            body: req.body,
+            query: req.query
         })
-        if ('body' in parsed) req.body = parsed.body
+        // if ('body' in parsed) req.body = parsed.body
+
+            ['body' , 'query'].forEach(key => {
+            if (key in parsed) {
+                Object.defineProperty(req, key, {
+                    value: parsed[key],
+                    writable: true,
+                    configurable: true,
+                    enumerable: true
+                })
+            }
+        })
+
+
         next()
     } catch (error) {
         if (error instanceof ZodError) {
-            const formattedErrors = error.errors.map(err => ({
+            const formattedErrors = error.issues.map(err => ({
                 field: err.path.length ? err.path.join('.') : 'unknown',
                 message: err.message
             }))
-            return next(new ApiError(400, 'Validation failed', formattedErrors))
+            return next(new ApiError(http_status.bad_request, 'Validation failed', formattedErrors))
         }
         next(error)
     }

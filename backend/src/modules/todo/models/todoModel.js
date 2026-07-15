@@ -14,12 +14,9 @@ export const todoSchema = new mongoose.Schema({
         type: String,
         required: [true, 'title is required'],
         trim: true,
-        minLength: [1, 'title cannot be empty'],
-        maxLength: [validation.title_max_Length, `title cannot be exceed ${validation.title_max_Length} characters` ],
-        validate: {
-            validator: v => v != null && v.trim().length > 0,
-            message: 'title cannot be blank'
-        }
+       minLength: [1, 'title cannot be empty'],
+        maxLength: [validation.title_max_Length, `title cannot exceed ${validation.title_max_Length} character`],
+
     },
 
     description:{
@@ -58,12 +55,6 @@ priority: {
     {
         timestamps: true,
         versionKey: false,
-        toJSON: {
-            transform(doc, ret) {
-                ret.id = ret._id.toString()
-                delete ret._id
-        }
-    }
 
 })
 export const title_collation ={locale: 'en', strength: 2}
@@ -75,5 +66,5 @@ export const title_collation ={locale: 'en', strength: 2}
 
 todoSchema.index({user: 1, title: 1}, {unique:true, collation: title_collation})
 todoSchema.index({user:1, status: 1, createdAt: -1})
-todoSchema.index({user:1, title: 'text', description: 'text'})
+todoSchema.index({ title: 'text', description: 'text'})
 export const Todo = mongoose.models.Todo || mongoose.model('Todo', todoSchema)

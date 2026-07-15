@@ -60,7 +60,7 @@ const searchStage = {
                     {
                       autocomplete: {
                           query: search,
-                          path: 'title',
+                          path: 'description',
                           fuzzy: {maxEdits: 1}
                       }
                     }
@@ -69,17 +69,30 @@ const searchStage = {
             }
         }
 }
-const pipeline = [
-    searchStage,
-    {$match: matchQuery},
-    ...(sort ? [{$sort: sort}] : []),
-    {$skip: skip},
-    {$limit: limit}
-]
+        const pipeline = [
+            searchStage,
+            {$match: matchQuery},
+            ...(sort ? [{$sort: sort}] : []),
+            {$skip: skip},
+            {$limit: limit}
+        ]
+    const countPipeline = [
+        searchStage,
+        {$match: matchQuery},
+        {$count: 'total'}
+    ]
+    const [todos, countResult] = await Promise.all([
+        this.model.aggregate(pipeline),
+        this.model.aggregate(countPipeline)
+    ]);
+    const total = countResult[0]?.total || 0;
+    return {todos: todos.map(toPlainObject), total};
+        }
+        const [todos,total] = await Promise.all([
+            this.model.find(query).sort(sort).skip(skip).limit(limit).lean(),
+            this.model.countDocuments(query)
+        ])
 
-}
-        const [todos, total] = await Promise.all([this.model.find(query).sort
-        (sort).skip(skip).limit(limit).lean(),this.model.countDocuments(query)])
         return{todos: todos.map(toPlainObject), total}
     }
 }
