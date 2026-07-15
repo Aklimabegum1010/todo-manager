@@ -7,7 +7,7 @@ export const validate = schema => async (req, _res, next) => {
         const parsed = await schema.parseAsync({
             body: req.body,
             query: req.query
-        })
+        });
         // if ('body' in parsed) req.body = parsed.body
 
             ['body' , 'query'].forEach(key => {
@@ -25,11 +25,11 @@ export const validate = schema => async (req, _res, next) => {
         next()
     } catch (error) {
         if (error instanceof ZodError) {
-            const formattedErrors = error.issues.map(err => ({
+            const errors = error.issues.map(err => ({
                 field: err.path.length ? err.path.join('.') : 'unknown',
                 message: err.message
             }))
-            return next(new ApiError(http_status.bad_request, 'Validation failed', formattedErrors))
+            return next(new ApiError(http_status.bad_request, 'Validation failed', errors))
         }
         next(error)
     }

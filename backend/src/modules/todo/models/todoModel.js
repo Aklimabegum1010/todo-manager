@@ -14,7 +14,7 @@ export const todoSchema = new mongoose.Schema({
         type: String,
         required: [true, 'title is required'],
         trim: true,
-       minLength: [1, 'title cannot be empty'],
+        minLength: [1, 'title cannot be empty'],
         maxLength: [validation.title_max_Length, `title cannot exceed ${validation.title_max_Length} character`],
 
     },
@@ -60,10 +60,8 @@ priority: {
 export const title_collation ={locale: 'en', strength: 2}
 
 
-// todoSchema.index({user:1, priority: 1})
-// todoSchema.index({user:1, dueDate: 1})
-
-
+todoSchema.index({user:1, priority: 1})
+todoSchema.index({user:1, dueDate: 1})
 todoSchema.index({user: 1, title: 1}, {unique:true, collation: title_collation})
 todoSchema.index({user:1, status: 1, createdAt: -1})
 todoSchema.index({ title: 'text', description: 'text'})
