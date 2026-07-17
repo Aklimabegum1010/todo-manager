@@ -1,4 +1,4 @@
-import z from "zod";
+import z, {object} from "zod";
 import {pagination, validation} from "../../../shared/constants.js";
 import {priority_status, valid_todo_status} from "../../../shared/enums.js";
 
@@ -39,6 +39,9 @@ export const bulkCreateTodosSchema = z.object({
     })
 })
 
+
+     //----------- get er kaj -----------//
+
 export const getTodosQuerySchema = z.object({
     query: z.object({
         page: z.string()
@@ -61,5 +64,14 @@ export const getTodosQuerySchema = z.object({
             .optional()
             .transform(val => val === 'true')
     })
+})
+
+
+//get todo with id //
+export const getTodoParamSchema = z.object({
+params: z.object({id: z.string({required_error: 'ID is required'})
+        .trim()
+        .regex(/^[a-f\d]{24}$/i, 'Invalid ID format')
+})
 })
 

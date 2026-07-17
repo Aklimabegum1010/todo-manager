@@ -45,7 +45,10 @@ if (search){
     if (matchQuery.user){
         matchQuery.user = toObjectId(matchQuery.user, 'User ID')
     }
-const searchStage = {
+
+    const fuzzyOptions = search.length > 2 ? { fuzzy: { maxEdits: 1 }} : {};
+
+    const searchStage = {
         $search: {
             index: 'todo_autocomplete',
             compound: {
@@ -54,7 +57,7 @@ const searchStage = {
                       autocomplete: {
                           query: search,
                           path: 'title',
-                          fuzzy: {maxEdits: 1}
+                         ...fuzzyOptions,
                       }
                     },
                     {
