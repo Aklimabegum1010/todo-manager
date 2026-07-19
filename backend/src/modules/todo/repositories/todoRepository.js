@@ -64,7 +64,7 @@ if (search){
                       autocomplete: {
                           query: search,
                           path: 'description',
-                          fuzzy: {maxEdits: 1}
+                          ...fuzzyOptions
                       }
                     }
                 ],

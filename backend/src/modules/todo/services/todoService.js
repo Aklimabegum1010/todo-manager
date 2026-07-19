@@ -66,7 +66,7 @@ const created = await this.todoRepository.insertMany(todoWithUser)
         const filtersQuery = TodoService.#buildFilterQuery(filterQuery, userId)
         const {todos, total} = await this.todoRepository.findWithPagination(filtersQuery, {
             page, limit
-        })
+        }, search)
         return{
           todos,
             pagination: {

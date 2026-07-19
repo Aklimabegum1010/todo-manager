@@ -54,12 +54,17 @@ export const getTodosQuerySchema = z.object({
             .transform(val => val !== undefined ? parseInt(val, 10) : pagination.default_limit)
             .pipe(z.number().int().min(pagination.default_page).max(pagination.max_limit, `limit cannot exceed ${pagination.max_limit}`)),
 
-        status: z.enum(valid_todo_status).optional(),
-        priority: z.enum(priority_status).optional(),
+        status: z.enum(valid_todo_status)
+            .optional(),
+
+        priority: z.enum(priority_status)
+            .optional(),
+
         search: z.string()
             .trim()
             .max(100, 'search query cannot exceed 100 characters')
             .optional(),
+
         overdue: z.enum(['true', 'false'])
             .optional()
             .transform(val => val === 'true')
