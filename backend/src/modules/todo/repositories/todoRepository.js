@@ -98,6 +98,28 @@ if (search){
 
         return{todos: todos.map(toPlainObject), total}
     }
+
+
+
+
+// get er kaj id diye //
+
+#ownerFilter(id, userId){
+return{
+    _id: toObjectId(id, 'Todo ID'),
+    user: toObjectId(userId, 'User ID')
+}
+}
+
+
+
+
+
+async findOneByIdAndUser(id, userId){
+const todo = await this.model.findOne(this.#ownerFilter(id, userId)).lean()
+    return toPlainObject(todo)
+}
+
 }
 
 

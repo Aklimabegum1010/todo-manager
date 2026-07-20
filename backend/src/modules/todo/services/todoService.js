@@ -75,5 +75,23 @@ const created = await this.todoRepository.insertMany(todoWithUser)
             }
         }
     }
+
+
+
+async getById(id, userId){
+const todo = await this.todoRepository.findOneByIdAndUser(id, userId)
+    if (!todo){
+        throw new ApiError(http_status.not_found, 'Todo not found')
+    }
+    return  todo
 }
+}
+
+
+
+
+
+
+
+
 

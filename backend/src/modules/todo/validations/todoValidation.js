@@ -74,9 +74,9 @@ export const getTodosQuerySchema = z.object({
 
 //get todo with id //
 export const getTodoParamSchema = z.object({
-params: z.object({id: z.string({required_error: 'ID is required'})
+params: z.strictObject({id: z.string({error: 'ID is required'})
         .trim()
-        .regex(/^[a-f\d]{24}$/i, 'Invalid ID format')
+        .regex(/^[a-f\d]{24}$/i, {error: 'Invalid ID format'})
 })
 })
 

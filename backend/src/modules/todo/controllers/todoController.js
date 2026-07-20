@@ -25,3 +25,11 @@ export const getTodos = asyncHandler(async (req, res) => {
     const todo = await todoService.getAll(req.query || {} , req.user?.id)
     new ApiResponse(http_status.ok, todo, 'todo retrieved successfully').send(res)
 })
+
+
+export const getTodoById = asyncHandler(async (req,res) => {
+const todo = await todoService.getById(req.params?.id, req.user?.id)
+new ApiResponse(http_status.ok, todo, 'Todo retrieved successfully').send(res)
+})
+
+

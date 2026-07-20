@@ -14,7 +14,8 @@ export const http_status = {
     conflict: 409,
     unauthorized: 401,
     internal_server_error:500,
-    bad_request: 400
+    bad_request: 400,
+    not_found: 404
 }
 
 export const pagination = Object.freeze({
