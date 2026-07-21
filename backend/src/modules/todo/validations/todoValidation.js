@@ -4,6 +4,13 @@ import {priority_status, valid_todo_status} from "../../../shared/enums.js";
 
 
 
+
+
+const objectIdSchema = z.string({error: 'ID is required'})
+    .trim()
+    .regex(/^[a-f\d]{24}$/i, {error: 'Invalid ID format'})
+
+
 const todoItemSchema = z.object({
     title: z.string()
         .trim()
@@ -74,9 +81,31 @@ export const getTodosQuerySchema = z.object({
 
 //get todo with id //
 export const getTodoParamSchema = z.object({
-params: z.strictObject({id: z.string({error: 'ID is required'})
-        .trim()
-        .regex(/^[a-f\d]{24}$/i, {error: 'Invalid ID format'})
+params: z.strictObject({id: objectIdSchema})
+
 })
+
+
+// updatetodo with id //
+
+
+const dueDateSchema = z.coerce.date({
+    error: 'Due date must be a valid date'
+})
+
+
+
+const emptyToUndefined = schema => z.preprocess(val => (val === '' || val
+=== null ? undefined : val), schema)
+
+
+const updateTodoItemSchema = todoItemSchema.extend({
+    dueDate: emptyToUndefined(dueDateSchema.optional)
+})
+
+export const updateTodoSchema = z.object({
+    params: z.strictObject({ id: objectIdSchema}),
+    body: updateTodoItemSchema.partial().refine(data => Object.values(data)
+        .some(val => val !== undefined), {error: 'At least one field must be provided'})
 })
 

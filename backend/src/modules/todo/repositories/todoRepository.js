@@ -112,9 +112,6 @@ return{
 }
 
 
-
-
-
 async findOneByIdAndUser(id, userId){
 const todo = await this.model.findOne(this.#ownerFilter(id, userId)).lean()
     return toPlainObject(todo)
