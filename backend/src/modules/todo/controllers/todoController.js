@@ -33,7 +33,19 @@ new ApiResponse(http_status.ok, todo, 'Todo retrieved successfully').send(res)
 })
 
 export const updateTodo = asyncHandler(async (req, res) => {
+const todo = await todoService.update(req.params?.id, req.body, req.user?.id)
+    new ApiResponse(http_status.ok, todo, 'Todo updated successfully').send(res)
+})
 
+
+export const deleteTodo = asyncHandler(async (req, res) => {
+const todo = await todoService.delete(req.params?.id, req.user?.id)
+    new ApiResponse(http_status.ok, todo, 'Todo deleted successfully').send(res)
+})
+
+export const deleteAllTodos = asyncHandler(async (req, res) => {
+const todos = await todoService.deleteAll(req.user?.id)
+    new ApiResponse(http_status.ok, todos, `${todos}All todo deleted successfully`).send(res)
 })
 
 

@@ -86,6 +86,27 @@ const todo = await this.todoRepository.findOneByIdAndUser(id, userId)
     }
     return  todo
 }
+
+
+
+//update todo//
+
+async update(id, updateData, userId){
+const todo = await this.todoRepository.updateOneByIdAndUser(id, updateData, userId)
+    if (!todo) {
+        throw new ApiError(http_status.not_found, 'Todo not found')
+    }
+    return todo
+}
+
+async delete(id, userId){
+    const todo = await this.todoRepository.deleteOneByIdAndUser(id, updateData, userId)
+    if (!todo) {
+        throw new ApiError(http_status.not_found, 'Todo not found')
+    }
+    return todo
+}
+
 }
 
 

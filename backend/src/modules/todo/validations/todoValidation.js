@@ -100,7 +100,7 @@ const emptyToUndefined = schema => z.preprocess(val => (val === '' || val
 
 
 const updateTodoItemSchema = todoItemSchema.extend({
-    dueDate: emptyToUndefined(dueDateSchema.optional)
+    dueDate: emptyToUndefined(dueDateSchema.optional())
 })
 
 export const updateTodoSchema = z.object({

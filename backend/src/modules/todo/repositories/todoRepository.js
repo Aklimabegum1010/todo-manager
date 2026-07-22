@@ -117,6 +117,18 @@ const todo = await this.model.findOne(this.#ownerFilter(id, userId)).lean()
     return toPlainObject(todo)
 }
 
+async updateOneByIdAndUser(id, updateData, userId){
+        const todo = await this.model.findOneAndUpdate(this.#ownerFilter(id, userId), {$set: updateData}, {
+            returnDocument: 'after',
+            runValidators: true
+        }).lean()
+    return toPlainObject(todo)
+}
+async deleteOneByIdAndUser(id, userId){
+    const todo = await this.model.findOneAndDelete(this.#ownerFilter(id, userId)).lean()
+    return toPlainObject(todo)
+}
+
 }
 
 
