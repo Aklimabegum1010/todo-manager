@@ -111,11 +111,12 @@ return{
 }
 }
 
-
 async findOneByIdAndUser(id, userId){
 const todo = await this.model.findOne(this.#ownerFilter(id, userId)).lean()
     return toPlainObject(todo)
 }
+
+
 
 async updateOneByIdAndUser(id, updateData, userId){
         const todo = await this.model.findOneAndUpdate(this.#ownerFilter(id, userId), {$set: updateData}, {
@@ -128,6 +129,17 @@ async deleteOneByIdAndUser(id, userId){
     const todo = await this.model.findOneAndDelete(this.#ownerFilter(id, userId)).lean()
     return toPlainObject(todo)
 }
+
+
+
+//delete all er kaj
+
+    async deleteManyUser(userId){
+        const todo = await this.model.deleteMany({user: toObjectId(userId, 'User ID')})
+        return {
+            deletedCount: todos.deletedCount
+        }
+    }
 
 }
 

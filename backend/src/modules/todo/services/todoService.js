@@ -2,6 +2,7 @@ import {TodoRepository} from "../repositories/todoRepository.js";
 import {ApiError} from "../../../utils/apiError.js";
 import {http_status, pagination} from "../../../shared/constants.js";
 import {todo_status} from "../../../shared/enums.js";
+import {deleteAllTodos} from "../controllers/todoController.js";
 
 export class TodoService {
     constructor(repository = new TodoRepository()) {
@@ -78,6 +79,8 @@ const created = await this.todoRepository.insertMany(todoWithUser)
 
 
 
+
+    
 async getById(id, userId){
 
 const todo = await this.todoRepository.findOneByIdAndUser(id, userId)
@@ -100,12 +103,28 @@ const todo = await this.todoRepository.updateOneByIdAndUser(id, updateData, user
 }
 
 async delete(id, userId){
-    const todo = await this.todoRepository.deleteOneByIdAndUser(id, updateData, userId)
+    const todo = await this.todoRepository.deleteOneByIdAndUser(id, userId)
     if (!todo) {
         throw new ApiError(http_status.not_found, 'Todo not found')
     }
     return todo
 }
+
+
+
+async deleteAll(userId){
+    const todo = await this.todoRepository.deleteManyUser(userId)
+
+    return {
+        deletedCount: todos.deletedCount
+    }
+}
+
+
+
+
+
+
 
 }
 
