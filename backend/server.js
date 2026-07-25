@@ -18,18 +18,18 @@ const startServer = async () => {
         // console.log(`server is running on port ${port}`);
     })
 
-// let isShuttingDown = false
-//     const shutdown = async signal => {
-//         if (isShuttingDown) return
-//         isShuttingDown = true
-//         logger.info(`${signal} received shutting down gracefully`)
-//
-//         const  forceTimer = setTimeout(() => {
-//             logger.error('forced shutdown after timeout')
-//             process.exit(1)
-//         }, 10_000)
-//         forceTimer.unref()
-//     }
+let isShuttingDown = false
+    const shutdown = async signal => {
+        if (isShuttingDown) return
+        isShuttingDown = true
+        logger.info(`${signal} received shutting down gracefully`)
+
+        const  forceTimer = setTimeout(() => {
+            logger.error('forced shutdown after timeout')
+            process.exit(1)
+        }, 10_000)
+        forceTimer.unref()
+    }
 
 }
 try {
