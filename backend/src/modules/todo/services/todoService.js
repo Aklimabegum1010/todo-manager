@@ -116,7 +116,8 @@ async deleteAll(userId){
     const todo = await this.todoRepository.deleteManyUser(userId)
 
     return {
-        deletedCount: todos.deletedCount
+        deletedCount: todo.deletedCount
+
     }
 }
 

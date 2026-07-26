@@ -137,7 +137,7 @@ async deleteOneByIdAndUser(id, userId){
     async deleteManyUser(userId){
         const todo = await this.model.deleteMany({user: toObjectId(userId, 'User ID')})
         return {
-            deletedCount: todos.deletedCount
+            deletedCount: todo.deletedCount
         }
     }
 
