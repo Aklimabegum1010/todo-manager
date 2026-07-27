@@ -19,6 +19,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+
     "pino-pretty": "^13.1.3"
   }
 }
