@@ -53,6 +53,8 @@ let isShuttingDown = false
     })
 
 
+
+
     process.on('uncaughtException', err => {
         logger.fatal({err}, 'uncaught exception')
         shutdown('uncaughtException')
